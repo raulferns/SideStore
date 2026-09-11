@@ -390,12 +390,12 @@ private extension SettingsViewController
     func update()
     {
         let currentActiveTeam = DatabaseManager.shared.activeTeam()
-        verboseLog("[SettingsVC] update() called. activeTeam: \(currentActiveTeam?.identifier ?? "nil"), account: \(currentActiveTeam?.account.appleID ?? "nil")")
+        verboseLog("[SettingsVC] update() called. activeTeam: \(currentActiveTeam?.identifier ?? "nil"), account: \(currentActiveTeam?.account?.appleID ?? "nil")")
         
         if let team = currentActiveTeam, AuthManager.shared.isAuthenticated
         {
             self.accountNameLabel.text = team.name
-            self.accountEmailLabel.text = team.account.appleID
+            self.accountEmailLabel.text = team.account?.appleID
             self.accountTypeLabel.text = team.type.localizedDescription
             
             self.activeTeam = team

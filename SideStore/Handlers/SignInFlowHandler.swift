@@ -18,7 +18,7 @@ class SignInFlowHandler: AnyObject, SignInHandler, AnisetteServerHandler {
     private var activeAuthCompletionHandler: ((Result<(ALTAccount, ALTAppleAPISession), Error>) -> Void)?
     
     private lazy var navigationController: UINavigationController = {
-        let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
+        let storyboard = UIStoryboard(name: "Authentication", bundle: Bundle(for: SignInFlowHandler.self))
         let navigationController = storyboard.instantiateViewController(withIdentifier: "navigationController") as! UINavigationController
         navigationController.isModalInPresentation = true
         return navigationController
@@ -54,7 +54,7 @@ class SignInFlowHandler: AnyObject, SignInHandler, AnisetteServerHandler {
         return try await withCheckedThrowingContinuation { continuation in
             self.credentialsContinuation = continuation
             
-            let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
+            let storyboard = UIStoryboard(name: "Authentication", bundle: Bundle(for: SignInFlowHandler.self))
             let authVC = storyboard.instantiateViewController(withIdentifier: "authenticationViewController") as! AuthenticationViewController
             self.presentedAuthVC = authVC
             
@@ -520,7 +520,7 @@ class SignInFlowHandler: AnyObject, SignInHandler, AnisetteServerHandler {
         }
 
         return try await withCheckedThrowingContinuation { continuation in
-            let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
+            let storyboard = UIStoryboard(name: "Authentication", bundle: Bundle(for: SignInFlowHandler.self))
             let selectTeamViewController = storyboard.instantiateViewController(withIdentifier: "selectTeamViewController") as! SelectTeamViewController
             selectTeamViewController.teams = teams
             selectTeamViewController.completionHandler = { result in
@@ -534,7 +534,7 @@ class SignInFlowHandler: AnyObject, SignInHandler, AnisetteServerHandler {
     func resolvePostAuth() async {
         await withCheckedContinuation { continuation in
             var hasResumed = false
-            let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
+            let storyboard = UIStoryboard(name: "Authentication", bundle: Bundle(for: SignInFlowHandler.self))
             let instructionsViewController = storyboard.instantiateViewController(withIdentifier: "instructionsViewController") as! InstructionsViewController
             instructionsViewController.showsBottomButton = true
             instructionsViewController.completionHandler = {
@@ -585,7 +585,7 @@ class SignInFlowHandler: AnyObject, SignInHandler, AnisetteServerHandler {
 
         return try await withCheckedThrowingContinuation { continuation in
             var hasResumed = false
-            let storyboard = UIStoryboard(name: "Authentication", bundle: nil)
+            let storyboard = UIStoryboard(name: "Authentication", bundle: Bundle(for: SignInFlowHandler.self))
             let resignViewController = storyboard.instantiateViewController(withIdentifier: "resignAltStoreViewController") as! ResignAltStoreViewController
             resignViewController.context = context
             resignViewController.mismatchReason = mismatchReason

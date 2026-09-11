@@ -56,7 +56,12 @@ public extension Fetchable
                 return
             }
             
-            let fetchRequest = self.fetchRequest() as! NSFetchRequest<Self>
+            let fetchRequest: NSFetchRequest<Self>
+            if let req = self.fetchRequest() as? NSFetchRequest<Self> {
+                fetchRequest = req
+            } else {
+                fetchRequest = NSFetchRequest<Self>(entityName: String(describing: self))
+            }
             fetchRequest.predicate = predicate
             fetchRequest.sortDescriptors = sortDescriptors
             fetchRequest.returnsObjectsAsFaults = false

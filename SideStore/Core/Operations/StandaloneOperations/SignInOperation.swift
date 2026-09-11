@@ -403,6 +403,10 @@ private extension SignInOperation {
     
     private func validateCodeSign(signer: ALTSigner, session: ALTAppleAPISession) async throws -> Bool {
         self.verboseLog("[SignInOperation] validateCodeSign: entering method")
+        if NSClassFromString("LCSharedUtils") != nil || ProcessInfo.processInfo.environment["LC_HOME_PATH"] != nil {
+            self.debugLog("[SignInOperation] validateCodeSign: Running inside LiveContainer host environment. Skipping resign validation.")
+            return false
+        }
         guard let appBundle = ALTApplication(fileURL: Bundle.Info.activeBundleURL), 
               let provisioningProfile = appBundle.provisioningProfile else 
         {
